@@ -1,5 +1,5 @@
 #include "Arduino.h"
 
-#define a 1.0
-#define b 0
+#define m 0.42
+#define b -2
 #define total 1000

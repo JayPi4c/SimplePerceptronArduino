@@ -1,5 +1,4 @@
 #include "Arduino.h"
-#include "Vars.h"
 
 
 #ifndef Perceptron_h

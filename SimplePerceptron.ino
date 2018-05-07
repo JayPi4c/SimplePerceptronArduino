@@ -12,7 +12,7 @@
 
 
 // Inititalisierung des LCD für visuellen output
-LiquidCrystal_I2C lcd(0x27, 20, 4);
+LiquidCrystal_I2C lcd(0x20, 20, 4);
 
 // Das Perceptron, welches lernt
 Perceptron brain;
@@ -50,7 +50,7 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print("Best so far:    %");
   lcd.setCursor(0, 3);
-  lcd.print("target: " + (String)a + "x+" + (String)b + "=y");
+  lcd.print("target:" + (String)m + "x" + (b > 0 ? "+" : "") + (String)b + "=y");
 }
 
 void loop() {
@@ -89,19 +89,19 @@ void loop() {
   // Formula is weights[0]*x + weights[1]*y + weights[2] = 0
   float* weights = brain.getWeights();
 
-  float a_ = weights[0] / (-weights[1]);
-  float b_ = weights[2] / (-weights[1]);
+  float m_ = (-weights[0]) / weights[1];
+  float b_ = (-weights[2]) / weights[1];
   //Serial.println(weights[2]);
 
   lcd.setCursor(0, 2);
-  String msg = "guess: " + (String)a_ + "x+" + (String)b_ + "=y";
+  String msg = "guess: " + (String)m_ + "x" + ( b_ > 0 ? "+" : "") + (String)b_ + "=y";
   lcd.print(fillEmpty(msg));
 
 
   digitalWrite(13, LOW);
   // training:
   // Trainiere pro Durchlauf einen neuen Punkt und verbessere so die Schätzung
-  //for(int i = 0; i < 500; i++){
+  //for (int i = 0; i < 10000; i++) {
   Point pt;
   float inputs[] = {pt.x, pt.y, pt.bias};
   int target = pt.label;
@@ -109,7 +109,7 @@ void loop() {
   //}
   // nach einer Zehntel Sekunde beginnt die Loop wieder von vorne.
   // (Damit man auch lesen kann, was auf den Display geschrieben wird)
-  delay(100);
+  //delay(100);
 
   cycle++;
   if (cycle > 500) {
@@ -118,7 +118,11 @@ void loop() {
     lcd.setCursor(0, 1);
     lcd.print("Best so far:    %");
     lcd.setCursor(0, 3);
-    lcd.print("target: " + (String)a + "x+" + (String)b + "=y");
+    lcd.print("target: " + (String)m + "x"+( b_ > 0 ? "+" : "") + (String)b + "=y");
+    lcd.setCursor(13, 1);
+    int n = (int) (bestSoFar);
+    String str = (String)n;
+    lcd.print(getString(str));
     cycle = 0;
   }
 }
@@ -127,7 +131,6 @@ void loop() {
 String getString(String msg) {
   int len = msg.length();
   String msgOld = msg;
-  // lcd.print(len);
   if (len < 3) {
     for (int i = 0; i < 3 - len; i++)
       msg = " ";
