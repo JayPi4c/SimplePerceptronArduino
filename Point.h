@@ -12,7 +12,7 @@ class Point {
     float bias;
     int label;
 
-    Point();
+    Point(float m, float b);
 };
 
 #endif

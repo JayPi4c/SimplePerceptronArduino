@@ -1,7 +1,7 @@
 #include "Point.h"
-Point::Point() {
-  x = random(-10, 10);
-  y = random(b-10, b+10);
+Point::Point(float m, float b) {
+  x = random(-100, 100);
+  y = random(b-100, b+100);
   bias = 1;
   // label = (x > y ? 1 : -1);
   float y_ = (m * x) + b;

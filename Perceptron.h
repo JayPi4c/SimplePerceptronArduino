@@ -14,7 +14,7 @@ class Perceptron {
 
   private:
     float weights[3] = {};
-    float lr = 0.1;
+    float lr = 0.02;
     int sign(float n);
 };
 

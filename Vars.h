@@ -1,5 +1,11 @@
 #include "Arduino.h"
 
-#define m 0.42
-#define b -2
-#define total 1000
+#define total 10000
+
+
+//define von den Pins
+
+#define CLK  2
+#define DT  4
+#define SW 33
+
